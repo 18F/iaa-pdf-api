@@ -19,3 +19,9 @@ bundle exec thin start -p 4000
 ```
 cf push
 ```
+
+## Testing
+
+To quickly ensure the site is working, run `./test/test.sh` locally.
+
+The IAA gem has tests of its own that likely need not be duplicated here.

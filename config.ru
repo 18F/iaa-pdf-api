@@ -18,13 +18,6 @@ class CorsWrapper
   end
 end
 
-class Pdftk
-  def call(env)
-    [200, {}, `which pdftk`]
-  end
-end
-
 run Rack::URLMap.new({
-  '/iaa' => CorsWrapper.new(IAA::Server),
-  '/pdftk' => Pdftk.new
+  '/iaa' => CorsWrapper.new(IAA::Server)
 })
