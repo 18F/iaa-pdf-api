@@ -18,6 +18,27 @@ class CorsWrapper
   end
 end
 
-run Rack::URLMap.new(
-  '/iaa' => CorsWrapper.new(IAA::Server)
-)
+class WhichPdftk
+  def call(env)
+    [200, {"Content-Type" => "text/json"}, [`which pdftk`]]
+  end
+end
+
+class Pdftk
+  def call(env)
+    [200, {"Content-Type" => "text/json"}, [`pdftk`]]
+  end
+end
+
+class FullpathPdftk
+  def call(env)
+    [200, {"Content-Type" => "text/json"}, [`/home/vcap/app/vendor/bundle/bin/pdftk`]]
+  end
+end
+
+run Rack::URLMap.new({
+  '/iaa' => CorsWrapper.new(IAA::Server),
+  '/which_pdftk' => WhichPdftk.new,
+  '/pdftk' => Pdftk.new,
+  '/fullpath_pdftk' => FullpathPdftk.new
+})
